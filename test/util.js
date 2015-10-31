@@ -107,3 +107,32 @@ exports.assertTasks = function(text, expected) {
       assert.equal(JSON.stringify(resp), JSON.stringify(expected)); 
   });
 }
+
+exports.assertTask = function(text, taskName, expected) {
+  var defs = [];
+  var defNames = ["ecma5"]; 
+  if (defNames) {
+      for (var i = 0; i < defNames.length; i++) {
+          var def = allDefs[defNames[i]];
+          defs.push(def);
+      }
+  }
+  var queryOptions = defaultQueryOptions;
+
+  var server = createServer(defs, {});
+  server.addFile("gulpfile.js", text);
+  server.request({
+      query : {
+          type: "gulp-task",
+          file: "gulpfile.js",
+          name: taskName
+      }
+  }, function(err, resp) {
+      if (err)
+          throw err;
+      var actualMessages = resp.messages;
+      var expectedMessages = expected.messages;
+
+      assert.equal(JSON.stringify(resp), JSON.stringify(expected)); 
+  });
+}
