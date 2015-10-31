@@ -80,7 +80,7 @@ exports.assertCompletion = function(text, expected, name) {
 	});
 }
 
-exports.assertTasks = function(text, expected) {
+exports.assertTasks = function(text, expected, filename) {
   var defs = [];
   var defNames = ["ecma5"]; 
   if (defNames) {
@@ -90,13 +90,14 @@ exports.assertTasks = function(text, expected) {
       }
   }
   var queryOptions = defaultQueryOptions;
-
+  filename = filename || "gulpfile.js";
+  
   var server = createServer(defs, {});
-  server.addFile("gulpfile.js", text);
+  server.addFile(filename, text);
   server.request({
       query : {
           type: "gulp-tasks",
-          file: "gulpfile.js"
+          file: filename
       }
   }, function(err, resp) {
       if (err)
@@ -108,7 +109,7 @@ exports.assertTasks = function(text, expected) {
   });
 }
 
-exports.assertTask = function(text, taskName, expected) {
+exports.assertTask = function(text, taskName, expected, filename) {
   var defs = [];
   var defNames = ["ecma5"]; 
   if (defNames) {
@@ -118,13 +119,14 @@ exports.assertTask = function(text, taskName, expected) {
       }
   }
   var queryOptions = defaultQueryOptions;
-
+  filename = filename || "gulpfile.js";
+  
   var server = createServer(defs, {});
-  server.addFile("gulpfile.js", text);
+  server.addFile(filename, text);
   server.request({
       query : {
           type: "gulp-task",
-          file: "gulpfile.js",
+          file: filename,
           name: taskName
       }
   }, function(err, resp) {
