@@ -19,7 +19,7 @@
     "test": ">=0.0.5",
     "codemirror": "^5.8.0",
     "codemirror-extension": "^0.2.0",
-  	"codemirror-javascript": "^0.2.0" 
+    "codemirror-javascript": "^0.2.0" 
   },
   "keywords": [
     "tern",
